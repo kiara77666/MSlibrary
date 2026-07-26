@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>
+编辑作品 - MS Library
+</title>
+
+
+<link rel="stylesheet" href="style.css">
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>✏️ 编辑作品</h1>
+
+</header>
+
+
+<main>
+
+
+<div class="card">
+
+
+<input id="title"
+placeholder="作品名称">
+
+
+<select id="cp">
+
+<option>敏沙</option>
+
+<option>眉嘉</option>
+
+<option>朝允</option>
+
+<option>其他角色拉郎</option>
+
+</select>
+
+
+
+<select id="type">
+
+<option>同人文</option>
+
+<option>CP视频</option>
+
+</select>
+
+
+
+<input id="url"
+placeholder="跳转链接">
+
+
+<input id="tags"
+placeholder="标签">
+
+
+<textarea id="description"
+placeholder="简介"></textarea>
+
+
+<input type="file"
+id="cover">
+
+
+<button onclick="updateWork()">
+
+保存修改
+
+</button>
+
+
+</div>
+
+
+</main>
+
+
+<script src="edit.js"></script>
+
+
+</body>
+
+</html>
