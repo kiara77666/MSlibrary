@@ -1,335 +1,205 @@
-// ===============================
-// MS Library 管理后台
-// ===============================
+<!DOCTYPE html>
 
+<html lang="zh-CN">
 
-// 页面打开加载作品
+<head>
 
-loadAdminWorks();
+<meta charset="UTF-8">
 
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
 
 
-// ===============================
-// 添加作品
-// ===============================
+<title>
+MS Library 后台
+</title>
 
-async function saveWork(){
 
+<link rel="stylesheet" href="style.css">
 
-    const title =
-    document.getElementById("title").value;
 
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    const cp =
-    document.getElementById("cp").value;
 
+<!-- Supabase 配置 -->
+<script src="supabase.js"></script>
 
-    const type =
-    document.getElementById("type").value;
 
+</head>
 
-    const url =
-    document.getElementById("url").value;
 
+<body>
 
-    const tags =
-    document.getElementById("tags").value;
 
+<header>
 
-    const description =
-    document.getElementById("description").value;
+<h1>
+📚 管理后台
+</h1>
 
+</header>
 
-    const file =
-    document.getElementById("cover").files[0];
 
 
 
-    if(!title){
+<main>
 
-        alert("请输入作品名称");
 
-        return;
+<div class="card">
 
-    }
 
+<h2>
+添加作品
+</h2>
 
 
-    let cover = "";
 
+<input
+id="title"
+placeholder="作品名称">
 
 
-    // 上传封面
 
-    if(file){
+<select id="cp">
 
-        cover = await uploadImage(file);
+<option>敏沙</option>
 
-    }
+<option>眉嘉</option>
 
+<option>朝允</option>
 
+<option>其他角色拉郎</option>
 
-    const {
-        error
-    } = await client
+</select>
 
-    .from("works")
 
-    .insert([{
 
-        title:title,
 
-        cp:cp,
+<select id="type">
 
-        type:type,
 
-        url:url,
+<option>
+同人文
+</option>
 
-        tags:tags,
 
-        description:description,
+<option>
+CP视频
+</option>
 
-        cover:cover
 
-    }]);
+</select>
 
 
 
 
-    if(error){
+<input
+id="url"
+placeholder="跳转链接">
 
-        alert(
-        "保存失败："+error.message
-        );
 
-        return;
 
-    }
+<input
+id="tags"
+placeholder="标签">
 
 
 
-    alert("作品保存成功");
+<textarea
 
+id="description"
 
+placeholder="简介">
 
-    // 清空输入
+</textarea>
 
-    document.getElementById("title").value="";
 
-    document.getElementById("url").value="";
 
-    document.getElementById("tags").value="";
 
-    document.getElementById("description").value="";
+<input
 
+type="file"
 
+id="cover">
 
-    loadAdminWorks();
+
+
+
+
+<button onclick="saveWork()">
+
+保存作品
+
+</button>
+
+
+
+
+<hr>
+
+
+
+<h2>
+作品管理
+</h2>
+
+
+
+<div id="workList">
+
+加载中...
+
+</div>
+
+
+
+</div>
+
+
+</main>
+
+
+
+
+
+
+<script>
+
+
+// 检查登录状态
+
+client.auth.getSession()
+
+.then(({data})=>{
+
+
+if(!data.session){
+
+
+location.href="login.html";
 
 
 }
 
 
+});
 
 
 
+</script>
 
-// ===============================
-// 加载作品列表
-// ===============================
 
 
-async function loadAdminWorks(){
 
 
-    const {
-        data,
-        error
+<!-- 后台逻辑 -->
 
-    } = await client
+<script src="admin.js"></script>
 
 
-    .from("works")
 
-    .select("*")
+</body>
 
-    .order(
-        "id",
-        {
-            ascending:false
-        }
-    );
 
-
-
-    if(error){
-
-        alert(error.message);
-
-        return;
-
-    }
-
-
-
-    const box =
-    document.getElementById("workList");
-
-
-
-    box.innerHTML="";
-
-
-
-    data.forEach(item=>{
-
-
-        box.innerHTML += `
-
-
-        <div class="card">
-
-
-        <img src="${item.cover || ''}"
-
-        style="
-        width:100%;
-        height:180px;
-        object-fit:cover;
-        border-radius:15px;
-        ">
-
-
-        <h3>
-        ${item.title}
-        </h3>
-
-
-        <p>
-        ${item.cp}
-        </p>
-
-
-        <p>
-        ${item.type}
-        </p>
-
-
-        <p>
-        ${item.description || ""}
-        </p>
-
-
-
-        <button
-        onclick="editWork(${item.id})">
-
-        编辑
-
-        </button>
-
-
-
-        <button
-        onclick="deleteWork(${item.id})">
-
-        删除
-
-        </button>
-
-
-
-        </div>
-
-
-        `;
-
-
-    });
-
-
-}
-
-
-
-
-
-
-
-// ===============================
-// 删除作品
-// ===============================
-
-
-async function deleteWork(id){
-
-
-    let ok =
-    confirm(
-    "确定删除这个作品吗？"
-    );
-
-
-
-    if(!ok){
-
-        return;
-
-    }
-
-
-
-    const {
-        error
-
-    } = await client
-
-
-    .from("works")
-
-    .delete()
-
-    .eq(
-        "id",
-        id
-    );
-
-
-
-    if(error){
-
-        alert(error.message);
-
-        return;
-
-    }
-
-
-
-    alert("删除成功");
-
-
-
-    loadAdminWorks();
-
-
-}
-
-
-
-
-
-
-// ===============================
-// 编辑作品
-// ===============================
-
-
-function editWork(id){
-
-
-    location.href =
-    "edit.html?id="+id;
-
-
-}
+</html>
