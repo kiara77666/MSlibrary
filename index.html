@@ -153,17 +153,71 @@ grid-template-columns:1fr;
 
 <button onclick="showAll()">全部</button>
 
-<button onclick="filterCP('敏沙')">🌸 敏沙</button>
+  <button onclick="filterCP('敏沙')">
+🌸 敏沙
+<span>
+(${cpCount("敏沙")})
+</span>
+</button>
 
-<button onclick="filterCP('眉嘉')">🌷 眉嘉</button>
 
-<button onclick="filterCP('朝允')">💙 朝允</button>
+<button onclick="filterCP('眉嘉')">
+🌷 眉嘉
+<span>
+(${cpCount("眉嘉")})
+</span>
+</button>
 
-<button onclick="filterCP('其他角色拉郎')">✨ 其他角色拉郎</button>
+
+<button onclick="filterCP('朝允')">
+💙 朝允
+<span>
+(${cpCount("朝允")})
+</span>
+</button>
+
+
+<button onclick="filterCP('其他角色拉郎')">
+✨ 其他角色拉郎
+<span>
+(${cpCount("其他角色拉郎")})
+</span>
+</button>
+
 
 </div>
 
 </div>
+
+  <div class="section">
+
+<h2>首字母</h2>
+
+<div class="buttons">
+
+<script>
+
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
+.forEach(letter=>{
+
+document.write(`
+
+<button onclick="filterLetter('${letter}')">
+
+${letter}
+
+</button>
+
+`);
+
+});
+
+</script>
+
+
+</div>
+
+  </div>
 
 <div class="section">
 
