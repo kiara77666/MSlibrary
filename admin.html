@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 
 <head>
@@ -9,7 +8,6 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1.0">
 
-
 <title>
 MS Library 后台
 </title>
@@ -18,15 +16,13 @@ MS Library 后台
 <link rel="stylesheet" href="style.css">
 
 
-<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
-<!-- Supabase 配置 -->
 <script src="supabase.js"></script>
 
 
 </head>
+
 
 
 <body>
@@ -42,7 +38,6 @@ MS Library 后台
 
 
 
-
 <main>
 
 
@@ -55,8 +50,7 @@ MS Library 后台
 
 
 
-<input
-id="title"
+<input id="title"
 placeholder="作品名称">
 
 
@@ -75,55 +69,37 @@ placeholder="作品名称">
 
 
 
-
 <select id="type">
 
+<option>同人文</option>
 
-<option>
-同人文
-</option>
-
-
-<option>
-CP视频
-</option>
-
+<option>CP视频</option>
 
 </select>
 
 
 
 
-<input
-id="url"
+<input id="url"
 placeholder="跳转链接">
 
 
 
-<input
-id="tags"
+<input id="tags"
 placeholder="标签">
 
 
 
 <textarea
-
 id="description"
-
 placeholder="简介">
-
 </textarea>
 
 
 
-
 <input
-
 type="file"
-
 id="cover">
-
-
 
 
 
@@ -132,7 +108,6 @@ id="cover">
 保存作品
 
 </button>
-
 
 
 
@@ -161,45 +136,29 @@ id="cover">
 
 
 
-
-
-
 <script>
-
-
-// 检查登录状态
 
 client.auth.getSession()
 
 .then(({data})=>{
 
-
 if(!data.session){
-
 
 location.href="login.html";
 
-
 }
 
-
 });
-
 
 
 </script>
 
 
 
-
-
-<!-- 后台逻辑 -->
-
 <script src="admin.js"></script>
 
 
 
 </body>
-
 
 </html>
