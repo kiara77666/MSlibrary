@@ -3,7 +3,7 @@
 // 登录 Supabase 后复制
 
 const SUPABASE_URL =
-"https://gezpsfshwiluwwntjbdk.supabase.co/rest/v1/";
+"https://gezpsfshwiluwwntjbdk.supabase.co/";
 
 const SUPABASE_ANON_KEY =
 "sb_secret_sbmK1DEGuy2jN_NlmmOQQg_l-F1S71F";
