@@ -2,10 +2,11 @@
 
 // 登录 Supabase 后复制
 
-const SUPABASE_URL = "你的 Project URL";
+const SUPABASE_URL =
+"https://xxxx.supabase.co";
 
-const SUPABASE_ANON_KEY = "你的 Anon Public Key";
-
+const SUPABASE_ANON_KEY =
+"eyxxxx";
 // ===========================
 
 const client = supabase.createClient(
