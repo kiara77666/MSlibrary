@@ -149,3 +149,11 @@ loadAdminWorks();
 
 
 }
+
+
+function editWork(id){
+
+location.href=
+"edit.html?id="+id;
+
+}
