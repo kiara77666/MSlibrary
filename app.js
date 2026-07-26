@@ -1,50 +1,52 @@
-let currentData = works;
+let works = [];
+let current = [];
 
+// 读取数据库
+async function loadWorks() {
 
-/* 渲染作品 */
+    const { data, error } = await client
+        .from("works")
+        .select("*")
+        .order("id", { ascending: false });
 
-function render(list){
+    if (error) {
+        console.log(error);
+        alert("读取数据库失败");
+        return;
+    }
 
-const grid=document.getElementById("grid");
+    works = data;
+    current = data;
 
-grid.innerHTML="";
+    createCP();
+    createLetter();
+    render(data);
+}
 
+// 渲染作品
+function render(list) {
 
-list.forEach(item=>{
+    const grid = document.getElementById("grid");
 
+    grid.innerHTML = "";
 
-grid.innerHTML+=`
+    list.forEach(item => {
 
-<div class="card"
-onclick="openWork(${item.id})">
+        grid.innerHTML += `
 
+<div class="card" onclick="openWork('${item.url}')">
 
-<img class="cover"
-src="${item.cover}">
-
+<img src="${item.cover}" onerror="this.src='images/default.jpg'">
 
 <div class="info">
 
 <h3>${item.title}</h3>
 
-<p>
-CP：${item.cp}
-</p>
+<p>${item.cp}</p>
 
-<span>
-${item.type}
-</span>
+<p>${item.type}</p>
 
-
-<button onclick="
-event.stopPropagation();
-favorite(${item.id})
-">
-
-${item.favorite?"❤️":"♡"}
-
-</button>
-
+<span class="tag">${item.tags || ""}</span>
 
 </div>
 
@@ -52,153 +54,143 @@ ${item.favorite?"❤️":"♡"}
 
 `;
 
-
-});
-
+    });
 
 }
 
+// 打开链接
+function openWork(url){
 
-/* 打开作品 */
-
-function openWork(id){
-
-let item=
-works.find(x=>x.id===id);
-
-localStorage.setItem(
-"last",
-JSON.stringify(item)
-);
-
-
-window.open(
-item.url,
-"_blank"
-);
+    window.open(url,"_blank");
 
 }
 
+// 搜索
+document.getElementById("search").oninput=function(){
 
-/* 收藏 */
+    let key=this.value.trim();
 
-function favorite(id){
+    if(key===""){
 
-let item=
-works.find(x=>x.id===id);
+        render(works);
 
+        return;
 
-item.favorite=
-!item.favorite;
+    }
 
+    let result=works.filter(item=>
 
-saveFavorite();
+        item.title.includes(key) ||
 
+        item.cp.includes(key) ||
 
-render(currentData);
+        (item.tags||"").includes(key)
 
-}
+    );
 
+    render(result);
 
+};
 
-/* 保存收藏 */
+// 自动生成CP分类
+function createCP(){
 
-function saveFavorite(){
+    const cpList=document.getElementById("cpList");
 
-localStorage.setItem(
-"favorite",
-JSON.stringify(
-works.filter(
-x=>x.favorite
-)
-)
-);
+    cpList.innerHTML="";
 
-}
+    let cps=[...new Set(works.map(i=>i.cp))];
 
+    let all=document.createElement("button");
 
-/* CP分类 */
+    all.innerText="全部";
 
+    all.onclick=function(){
 
-function filterCP(cp){
+        render(works);
 
-currentData=
-works.filter(
-x=>x.cp===cp
-);
+    }
 
+    cpList.appendChild(all);
 
-render(currentData);
+    cps.forEach(cp=>{
 
-}
+        let count=works.filter(i=>i.cp===cp).length;
 
+        let btn=document.createElement("button");
 
+        btn.innerText=`${cp} (${count})`;
 
-/* 全部 */
+        btn.onclick=function(){
 
-function showAll(){
+            render(
 
-currentData=works;
+                works.filter(i=>i.cp===cp)
 
-render(works);
+            );
 
-}
+        }
 
+        cpList.appendChild(btn);
 
-
-/* 首字母 */
-
-
-function filterLetter(letter){
-
-currentData=
-works.filter(
-x=>x.letter===letter
-);
-
-
-render(currentData);
+    });
 
 }
 
+// 自动生成首字母
+function createLetter(){
 
-/* 搜索 */
+    const box=document.getElementById("letterList");
 
+    box.innerHTML="";
 
-search.oninput=function(){
+    let letters=[...new Set(
 
-let key=this.value;
+        works.map(i=>
 
+            i.title.substring(0,1).toUpperCase()
 
-render(
+        )
 
-works.filter(x=>
+    )].sort();
 
-x.title.includes(key)
+    let all=document.createElement("button");
 
-||
-x.cp.includes(key)
+    all.innerText="全部";
 
-)
+    all.onclick=function(){
 
-);
+        render(works);
 
+    }
+
+    box.appendChild(all);
+
+    letters.forEach(letter=>{
+
+        let btn=document.createElement("button");
+
+        btn.innerText=letter;
+
+        btn.onclick=function(){
+
+            render(
+
+                works.filter(i=>
+
+                    i.title.substring(0,1).toUpperCase()==letter
+
+                )
+
+            );
+
+        }
+
+        box.appendChild(btn);
+
+    });
 
 }
 
-
-
-/* 自动统计CP数量 */
-
-
-function cpCount(cp){
-
-return works.filter(
-x=>x.cp===cp
-).length;
-
-}
-
-
-
-render(works);
+// 页面启动
+loadWorks();
