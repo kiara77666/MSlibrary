@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CP Collection</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
+}
+
+body{
+background:#fff5f8;
+}
+
+header{
+padding:20px;
+background:linear-gradient(135deg,#ff8fb1,#ffb6c1);
+color:white;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+h1{
+font-size:30px;
+margin-bottom:15px;
+}
+
+#search{
+width:100%;
+padding:14px;
+border:none;
+border-radius:15px;
+font-size:16px;
+outline:none;
+}
+
+.section{
+padding:18px;
+}
+
+.section h2{
+margin-bottom:15px;
+font-size:18px;
+}
+
+.buttons{
+display:flex;
+gap:10px;
+overflow:auto;
+padding-bottom:10px;
+}
+
+button{
+border:none;
+background:white;
+padding:10px 18px;
+border-radius:20px;
+cursor:pointer;
+font-size:15px;
+white-space:nowrap;
+box-shadow:0 3px 8px rgba(0,0,0,.08);
+}
+
+button:hover{
+background:#ff7ea4;
+color:white;
+}
+
+.grid{
+padding:18px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+gap:18px;
+}
+
+.card{
+background:white;
+border-radius:18px;
+overflow:hidden;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 8px 15px rgba(0,0,0,.08);
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.cover{
+height:170px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:60px;
+background:#ffe5ee;
+}
+
+.info{
+padding:15px;
+}
+
+.title{
+font-size:20px;
+font-weight:bold;
+}
+
+.cp{
+margin-top:8px;
+color:#666;
+}
+
+.type{
+margin-top:10px;
+display:inline-block;
+background:#ffd5e2;
+padding:5px 12px;
+border-radius:20px;
+}
+
+@media(max-width:700px){
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>📚 CP Collection</h1>
+
+<input id="search" placeholder="搜索同人文 / 视频">
+
+</header>
+
+<div class="section">
+
+<h2>CP 分类</h2>
+
+<div class="buttons">
+
+<button onclick="showAll()">全部</button>
+
+<button onclick="filterCP('敏沙')">🌸 敏沙</button>
+
+<button onclick="filterCP('眉嘉')">🌷 眉嘉</button>
+
+<button onclick="filterCP('朝允')">💙 朝允</button>
+
+<button onclick="filterCP('其他角色拉郎')">✨ 其他角色拉郎</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>类型</h2>
+
+<div class="buttons">
+
+<button onclick="filterType('全部')">全部</button>
+
+<button onclick="filterType('小说')">📖 同人文</button>
+
+<button onclick="filterType('视频')">🎬 CP视频</button>
+
+</div>
+
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+
+const data=[
+
+{
+title:"春风十里",
+cp:"敏沙",
+type:"小说",
+cover:"📖",
+url:"https://example.com"
+},
+
+{
+title:"敏沙MAD",
+cp:"敏沙",
+type:"视频",
+cover:"🎬",
+url:"https://example.com"
+},
+
+{
+title:"眉嘉合集",
+cp:"眉嘉",
+type:"小说",
+cover:"📚",
+url:"https://example.com"
+},
+
+{
+title:"朝允剪辑",
+cp:"朝允",
+type:"视频",
+cover:"🎥",
+url:"https://example.com"
+},
+
+{
+title:"拉郎作品",
+cp:"其他角色拉郎",
+type:"小说",
+cover:"❤️",
+url:"https://example.com"
+}
+
+];
+
+const grid=document.getElementById("grid");
+
+function render(list){
+
+grid.innerHTML="";
+
+list.forEach(item=>{
+
+grid.innerHTML+=`
+
+<div class="card" onclick="window.open('${item.url}','_blank')">
+
+<div class="cover">
+
+${item.cover}
+
+</div>
+
+<div class="info">
+
+<div class="title">
+
+${item.title}
+
+</div>
+
+<div class="cp">
+
+CP：${item.cp}
+
+</div>
+
+<div class="type">
+
+${item.type}
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+render(data);
+
+function filterCP(cp){
+
+render(data.filter(i=>i.cp===cp));
+
+}
+
+function filterType(type){
+
+if(type==="全部"){
+
+render(data);
+
+return;
+
+}
+
+render(data.filter(i=>i.type===type));
+
+}
+
+function showAll(){
+
+render(data);
+
+}
+
+document.getElementById("search").addEventListener("input",function(){
+
+let value=this.value.toLowerCase();
+
+render(
+
+data.filter(i=>
+
+i.title.toLowerCase().includes(value)
+
+||
+
+i.cp.toLowerCase().includes(value)
+
+)
+
+);
+
+});
+
+</script>
+
+</body>
+</html>
