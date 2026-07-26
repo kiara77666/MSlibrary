@@ -1,80 +1,18 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
 
-<title>设置</title>
+<title>
+MS Library 设置
+</title>
 
-
-<style>
-
-body{
-
-font-family:
--apple-system,BlinkMacSystemFont,"PingFang SC";
-
-background:#fff5f8;
-
-padding:20px;
-
-}
-
-
-.box{
-
-background:white;
-
-padding:20px;
-
-border-radius:20px;
-
-}
-
-
-input{
-
-width:100%;
-
-padding:12px;
-
-margin:10px 0;
-
-border-radius:10px;
-
-border:1px solid #ddd;
-
-}
-
-
-button{
-
-padding:12px 20px;
-
-border:none;
-
-border-radius:20px;
-
-background:#ff8fab;
-
-color:white;
-
-}
-
-
-.dark{
-
-background:#222;
-
-color:white;
-
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -82,109 +20,107 @@ color:white;
 <body>
 
 
-<div class="box">
+<header>
+
+<h1>⚙️ 网站设置</h1>
+
+</header>
 
 
-<h1>⚙️ 设置</h1>
+
+<main>
 
 
-<label>
-
-网站名称
-
-</label>
+<div class="card">
 
 
-<input id="siteName">
+<h2>主题设置</h2>
 
 
-<label>
+<button onclick="darkMode()">
 
-作品API地址
-
-</label>
-
-
-<input id="api">
-
-
-<label>
-
-主题
-
-</label>
-
-
-<select id="theme">
-
-<option value="light">
-
-浅色
-
-</option>
-
-
-<option value="dark">
-
-深色
-
-</option>
-
-</select>
-
-
-<br><br>
-
-
-<button onclick="save()">
-
-保存
+🌙 切换深色模式
 
 </button>
+
+
+
+<hr>
+
+
+
+<h2>API 配置</h2>
+
+
+<p>
+当前 API 状态：
+<span id="apiStatus">
+检测中...
+</span>
+</p>
+
+
+
+<label>
+Supabase URL
+</label>
+
+
+<input
+id="apiUrl"
+placeholder="输入 API 地址">
+
+
+
+<label>
+Anon Key
+</label>
+
+
+<input
+id="apiKey"
+placeholder="输入 API Key">
+
+
+
+<button onclick="saveAPI()">
+
+保存 API
+
+</button>
+
+
+
+<hr>
+
+
+
+<h2>
+网站信息
+</h2>
+
+
+<input
+id="siteName"
+placeholder="网站名称">
+
+
+<button onclick="saveSite()">
+
+保存网站名称
+
+</button>
+
 
 
 </div>
 
 
-
-<script>
-
-
-siteName.value=
-localStorage.siteName || 
-"CP Collection";
-
-
-api.value=
-localStorage.api || "";
+</main>
 
 
 
-function save(){
-
-
-localStorage.siteName=
-siteName.value;
-
-
-localStorage.api=
-api.value;
-
-
-
-if(theme.value==="dark"){
-
-document.body.className="dark";
-
-}
-
-alert("保存成功");
-
-
-}
-
-
-</script>
+<script src="settings.js"></script>
 
 
 </body>
