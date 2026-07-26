@@ -230,3 +230,58 @@ margin:auto;
 }
 
 }
+
+/* 深色模式 */
+
+.dark{
+
+background:#181818;
+
+color:#eee;
+
+}
+
+
+.dark header{
+
+background:#222;
+
+color:white;
+
+}
+
+
+.dark .card{
+
+background:#242424;
+
+color:white;
+
+}
+
+
+.dark input,
+.dark textarea,
+.dark select{
+
+background:#333;
+
+color:white;
+
+border-color:#555;
+
+}
+
+
+.dark footer{
+
+background:#222;
+
+}
+
+
+.dark footer a{
+
+color:#ddd;
+
+}
