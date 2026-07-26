@@ -6,7 +6,7 @@ const SUPABASE_URL =
 "https://xxxx.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"eyxxxx";
+"fzq080101.";
 // ===========================
 
 const client = supabase.createClient(
