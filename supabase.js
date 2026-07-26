@@ -6,7 +6,7 @@ const SUPABASE_URL =
 "https://gezpsfshwiluwwntjbdk.supabase.co/rest/v1/";
 
 const SUPABASE_ANON_KEY =
-"fzq0sb_secret_sbmK1DEGuy2jN_NlmmOQQg_l-F1S71F";
+"sb_secret_sbmK1DEGuy2jN_NlmmOQQg_l-F1S71F";
 // ===========================
 
 const client = supabase.createClient(
