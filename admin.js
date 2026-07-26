@@ -157,3 +157,109 @@ location.href=
 "edit.html?id="+id;
 
 }
+
+// 添加作品
+
+async function saveWork(){
+
+
+const title =
+document.getElementById("title").value;
+
+
+const cp =
+document.getElementById("cp").value;
+
+
+const type =
+document.getElementById("type").value;
+
+
+const desc =
+document.getElementById("desc").value;
+
+
+const file =
+document.getElementById("cover").files[0];
+
+
+
+if(!title){
+
+alert("请输入作品名称");
+
+return;
+
+}
+
+
+
+let coverUrl="";
+
+
+// 有图片才上传
+
+if(file){
+
+coverUrl =
+await uploadImage(file);
+
+}
+
+
+
+const {
+error
+}=await client
+
+.from("works")
+
+.insert([
+
+{
+
+title:title,
+
+cp:cp,
+
+type:type,
+
+desc:desc,
+
+cover:coverUrl
+
+}
+
+]);
+
+
+
+if(error){
+
+alert(
+"保存失败："+error.message
+);
+
+return;
+
+}
+
+
+
+alert("作品添加成功");
+
+
+
+// 清空
+
+document.getElementById("title").value="";
+
+document.getElementById("desc").value="";
+
+
+// 刷新列表
+
+loadAdminWorks();
+
+
+}
