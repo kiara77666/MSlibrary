@@ -194,3 +194,16 @@ function createLetter(){
 
 // 页面启动
 loadWorks();
+
+let name =
+localStorage.getItem("siteName");
+
+
+if(name){
+
+document.getElementById(
+"siteTitle"
+).innerHTML=
+"📚 "+name;
+
+}
