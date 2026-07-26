@@ -71,6 +71,14 @@ ${item.type}
 
 
 <button
+onclick="editWork(${item.id})">
+
+编辑
+
+</button>
+
+
+<button
 onclick="deleteWork(${item.id})">
 
 删除
