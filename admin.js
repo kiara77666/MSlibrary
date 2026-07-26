@@ -1,4 +1,6 @@
-// 页面打开加载作品
+// ==========================
+// 加载作品列表
+// ==========================
 
 loadAdminWorks();
 
@@ -16,7 +18,12 @@ error
 
 .select("*")
 
-.order("id",{ascending:false});
+.order(
+"id",
+{
+ascending:false
+}
+);
 
 
 
@@ -33,6 +40,7 @@ return;
 const box =
 document.getElementById("workList");
 
+
 box.innerHTML="";
 
 
@@ -45,7 +53,8 @@ box.innerHTML+=`
 <div class="card">
 
 
-<img src="${item.cover}"
+<img src="${item.cover || ''}"
+
 style="
 width:100%;
 height:180px;
@@ -60,26 +69,31 @@ ${item.title}
 
 
 <p>
+CP：
 ${item.cp}
 </p>
 
 
 <p>
+类型：
 ${item.type}
 </p>
 
 
+<p>
+${item.description || ""}
+</p>
 
-<button
-onclick="editWork(${item.id})">
+
+
+<button onclick="editWork(${item.id})">
 
 编辑
 
 </button>
 
 
-<button
-onclick="deleteWork(${item.id})">
+<button onclick="deleteWork(${item.id})">
 
 删除
 
@@ -87,7 +101,6 @@ onclick="deleteWork(${item.id})">
 
 
 </div>
-
 
 `;
 
@@ -100,83 +113,46 @@ onclick="deleteWork(${item.id})">
 
 
 
-// 删除作品
-
-async function deleteWork(id){
-
-
-let ok =
-confirm("确定删除这个作品吗？");
-
-
-if(!ok){
-
-return;
-
-}
-
-
-
-const {
-error
-}=await client
-
-.from("works")
-
-.delete()
-
-.eq("id",id);
-
-
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-
-
-alert("删除成功");
-
-
-loadAdminWorks();
-
-
-}
-
-
-}
-
-
-function editWork(id){
-
-location.href=
-"edit.html?id="+id;
-
-}
-
+// ==========================
 // 添加作品
+// ==========================
+
 
 async function saveWork(){
+
+
+alert("保存功能运行");
+
 
 
 const title =
 document.getElementById("title").value;
 
 
+
 const cp =
 document.getElementById("cp").value;
+
 
 
 const type =
 document.getElementById("type").value;
 
 
-const desc =
-document.getElementById("desc").value;
+
+const url =
+document.getElementById("url").value;
+
+
+
+const tags =
+document.getElementById("tags").value;
+
+
+
+const description =
+document.getElementById("description").value;
+
 
 
 const file =
@@ -194,14 +170,13 @@ return;
 
 
 
-let coverUrl="";
+let cover="";
 
 
-// 有图片才上传
 
 if(file){
 
-coverUrl =
+cover =
 await uploadImage(file);
 
 }
@@ -224,9 +199,13 @@ cp:cp,
 
 type:type,
 
-desc:desc,
+url:url,
 
-cover:coverUrl
+tags:tags,
+
+description:description,
+
+cover:cover
 
 }
 
@@ -237,7 +216,9 @@ cover:coverUrl
 if(error){
 
 alert(
-"保存失败："+error.message
+"保存失败："
++
+error.message
 );
 
 return;
@@ -250,16 +231,97 @@ alert("作品添加成功");
 
 
 
-// 清空
-
 document.getElementById("title").value="";
 
-document.getElementById("desc").value="";
+document.getElementById("url").value="";
+
+document.getElementById("tags").value="";
+
+document.getElementById("description").value="";
 
 
-// 刷新列表
 
 loadAdminWorks();
+
+
+}
+
+
+
+
+
+
+// ==========================
+// 删除作品
+// ==========================
+
+
+async function deleteWork(id){
+
+
+let ok =
+confirm(
+"确定删除这个作品吗？"
+);
+
+
+
+if(!ok){
+
+return;
+
+}
+
+
+
+const {
+error
+}=await client
+
+.from("works")
+
+.delete()
+
+.eq(
+"id",
+id
+);
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+alert("删除成功");
+
+
+loadAdminWorks();
+
+
+}
+
+
+
+
+
+
+// ==========================
+// 编辑作品
+// ==========================
+
+
+function editWork(id){
+
+
+location.href =
+"edit.html?id="+id;
 
 
 }
