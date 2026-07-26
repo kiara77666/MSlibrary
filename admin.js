@@ -1,122 +1,143 @@
-async function saveWork(){
+// 页面打开加载作品
 
-
-    const titleValue =
-        document.getElementById("title").value;
-
-
-    const cpValue =
-        document.getElementById("cp").value;
-
-
-    const typeValue =
-        document.getElementById("type").value;
-
-
-    const urlValue =
-        document.getElementById("url").value;
-
-
-    const tagsValue =
-        document.getElementById("tags").value;
-
-
-    const descriptionValue =
-        document.getElementById("description").value;
-
-
-    const file =
-        document.getElementById("cover").files[0];
+loadAdminWorks();
 
 
 
-    if(!titleValue || !urlValue){
-
-        alert("请填写作品名称和链接");
-
-        return;
-
-    }
+async function loadAdminWorks(){
 
 
+const {
+data,
+error
+}=await client
 
-    let coverUrl="";
+.from("works")
 
+.select("*")
 
-
-    // 如果选择了图片，上传封面
-
-    if(file){
-
-        coverUrl =
-        await uploadImage(file);
-
-        if(!coverUrl){
-
-            return;
-
-        }
-
-    }
+.order("id",{ascending:false});
 
 
 
-    const {
+if(error){
 
-        data,
+alert(error.message);
 
-        error
+return;
 
-    } = await client
-
-    .from("works")
-
-    .insert([{
-
-        title:titleValue,
-
-        cp:cpValue,
-
-        type:typeValue,
-
-        cover:coverUrl,
-
-        url:urlValue,
-
-        tags:tagsValue,
-
-        description:descriptionValue,
-
-        update:new Date()
-
-    }]);
+}
 
 
 
-    if(error){
+const box =
+document.getElementById("workList");
 
-        alert(
-            "保存失败："+error.message
-        );
-
-        return;
-
-    }
+box.innerHTML="";
 
 
 
-    alert("作品添加成功！");
+data.forEach(item=>{
+
+
+box.innerHTML+=`
+
+<div class="card">
+
+
+<img src="${item.cover}"
+style="
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:15px;
+">
+
+
+<h3>
+${item.title}
+</h3>
+
+
+<p>
+${item.cp}
+</p>
+
+
+<p>
+${item.type}
+</p>
 
 
 
-    // 清空表单
+<button
+onclick="deleteWork(${item.id})">
 
-    document.querySelectorAll(
-        "input,textarea"
-    )
-    .forEach(
-        e=>e.value=""
-    );
+删除
+
+</button>
+
+
+</div>
+
+
+`;
+
+});
+
+
+}
+
+
+
+
+
+// 删除作品
+
+async function deleteWork(id){
+
+
+let ok =
+confirm("确定删除这个作品吗？");
+
+
+if(!ok){
+
+return;
+
+}
+
+
+
+const {
+error
+}=await client
+
+.from("works")
+
+.delete()
+
+.eq("id",id);
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+alert("删除成功");
+
+
+loadAdminWorks();
+
+
+}
 
 
 }
