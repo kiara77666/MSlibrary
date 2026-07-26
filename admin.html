@@ -85,6 +85,22 @@ onclick="saveWork()">
 
 </main>
 
+  <script>
+
+client.auth.getSession()
+.then(({data})=>{
+
+if(!data.session){
+
+location.href="login.html";
+
+}
+
+});
+
+
+  </script>
+
 <script src="admin.js"></script>
 
 </body>
