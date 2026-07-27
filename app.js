@@ -7,7 +7,6 @@
 // 读取主题
 // ===============================
 
-
 (function(){
 
 const theme =
@@ -19,7 +18,6 @@ if(theme){
 document.body.className = theme;
 
 }
-
 
 })();
 
@@ -35,103 +33,6 @@ document.body.className = theme;
 let currentCP = "";
 
 let currentLetter = "";
-
-
-
-
-
-
-// ===============================
-// 获取首字母
-// ===============================
-
-
-function getFirstLetter(str){
-
-
-if(!str){
-
-return "";
-
-}
-
-
-// 英文
-
-let first =
-str.charAt(0).toUpperCase();
-
-
-if(/[A-Z]/.test(first)){
-
-
-return first;
-
-
-}
-
-
-
-// 中文范围粗略判断
-
-let code =
-str.charCodeAt(0);
-
-
-
-if(code>=19968 && code<=40869){
-
-
-if(code < 20320) return "A";
-
-if(code < 20700) return "B";
-
-if(code < 21000) return "C";
-
-if(code < 21300) return "D";
-
-if(code < 21600) return "E";
-
-if(code < 22000) return "F";
-
-if(code < 22500) return "G";
-
-if(code < 23000) return "H";
-
-if(code < 23500) return "J";
-
-if(code < 24000) return "K";
-
-if(code < 25000) return "L";
-
-if(code < 30000) return "M";
-
-if(code < 33000) return "N";
-
-if(code < 35000) return "P";
-
-if(code < 37000) return "Q";
-
-if(code < 39000) return "S";
-
-if(code < 40000) return "T";
-
-if(code < 40500) return "X";
-
-
-return "Y";
-
-
-}
-
-
-
-return "";
-
-}
-
-
-
 
 
 
@@ -215,9 +116,8 @@ return;
 
 
 
+
 box.innerHTML="";
-
-
 
 
 
@@ -228,6 +128,8 @@ let count = 0;
 
 
 data.forEach(item=>{
+
+
 
 
 
@@ -247,16 +149,12 @@ return;
 
 
 
+
 // 首字母筛选
-
-let letter =
-getFirstLetter(item.title);
-
-
 
 if(
 currentLetter &&
-letter !== currentLetter
+item.letter !== currentLetter
 ){
 
 return;
@@ -272,6 +170,7 @@ return;
 box.innerHTML += `
 
 
+
 <div class="card">
 
 
@@ -280,6 +179,7 @@ box.innerHTML += `
 ${item.title}
 
 </h3>
+
 
 
 
@@ -293,6 +193,7 @@ ${item.cp || ""}
 
 
 
+
 <p>
 
 类型：
@@ -300,6 +201,18 @@ ${item.cp || ""}
 ${item.type || ""}
 
 </p>
+
+
+
+
+<p>
+
+首字母：
+
+${item.letter || ""}
+
+</p>
+
 
 
 
@@ -313,6 +226,7 @@ ${item.tags || ""}
 
 
 
+
 <p>
 
 ${item.description || ""}
@@ -321,10 +235,15 @@ ${item.description || ""}
 
 
 
+
+
 <a href="${item.url || '#'}"
+
 target="_blank">
 
+
 进入作品
+
 
 </a>
 
@@ -333,11 +252,13 @@ target="_blank">
 </div>
 
 
+
 `;
 
 
 
 count++;
+
 
 
 });
@@ -368,7 +289,7 @@ box.innerHTML =
 
 
 // ===============================
-// CP分类按钮
+// CP分类
 // ===============================
 
 
@@ -380,15 +301,12 @@ document
 btn.onclick=function(){
 
 
-
 currentCP =
 this.innerText;
 
 
 
-if(
-currentCP==="全部"
-){
+if(currentCP==="全部"){
 
 currentCP="";
 
@@ -399,9 +317,7 @@ currentCP="";
 loadWorks();
 
 
-
 }
-
 
 
 });
@@ -414,8 +330,9 @@ loadWorks();
 
 
 
+
 // ===============================
-// 首字母分类按钮
+// 首字母分类
 // ===============================
 
 
@@ -427,15 +344,12 @@ document
 btn.onclick=function(){
 
 
-
 currentLetter =
 this.innerText;
 
 
 
-if(
-currentLetter==="全部"
-){
+if(currentLetter==="全部"){
 
 currentLetter="";
 
@@ -446,9 +360,7 @@ currentLetter="";
 loadWorks();
 
 
-
 }
-
 
 
 });
@@ -461,8 +373,9 @@ loadWorks();
 
 
 
+
 // ===============================
-// 搜索功能
+// 搜索
 // ===============================
 
 
@@ -477,8 +390,10 @@ if(search){
 search.oninput=function(){
 
 
+
 let keyword =
 this.value.toLowerCase();
+
 
 
 
@@ -510,7 +425,9 @@ card.style.display="none";
 });
 
 
+
 };
+
 
 
 }
