@@ -1,93 +1,55 @@
-// 深色模式
+// ===============================
+// MS Library 设置
+// ===============================
 
 
-function darkMode(){
+// 页面加载读取主题
 
-document.body.classList.toggle(
-"dark"
-);
-
-
-localStorage.setItem(
-"dark",
-document.body.classList.contains("dark")
-);
-
-
-}
-
-
-// 打开页面自动读取主题
-
-if(
-localStorage.getItem("dark")
-==="true"
-){
-
-document.body.classList.add(
-"dark"
-);
-
-}
+loadTheme();
 
 
 
-// API保存
+
+// ===============================
+// 切换主题
+// ===============================
 
 
-function saveAPI(){
+function changeTheme(theme){
 
 
-let url =
-document.getElementById("apiUrl").value;
+    document.body.className = theme;
 
 
-let key =
-document.getElementById("apiKey").value;
-
-
-
-localStorage.setItem(
-"supabase_url",
-url
-);
-
-
-localStorage.setItem(
-"supabase_key",
-key
-);
-
-
-
-document.getElementById(
-"apiStatus"
-).innerHTML="已保存";
+    localStorage.setItem(
+        "theme",
+        theme
+    );
 
 
 }
 
 
 
-// 网站名称
-
-function saveSite(){
 
 
-let name =
-document.getElementById("siteName").value;
+// ===============================
+// 读取保存主题
+// ===============================
+
+
+function loadTheme(){
+
+
+    const theme =
+    localStorage.getItem("theme");
 
 
 
-localStorage.setItem(
-"siteName",
-name
-);
+    if(theme){
 
+        document.body.className = theme;
 
-alert(
-"保存成功"
-);
-
+    }
 
 }
