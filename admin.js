@@ -27,102 +27,37 @@ loadAdminWorks();
 
 // ===============================
 
-function getLetter(str){
+function getLetter(title){
 
-if(!str){
 
-return "#";
+let map={
 
-}
+"敏":"M",
+"眉":"M",
+"朝":"C"
 
-// 英文
+};
+
 
 let first =
+title.charAt(0);
 
-str.charAt(0);
+
 
 if(/[a-zA-Z]/.test(first)){
 
+
 return first.toUpperCase();
 
-}
-
-// 中文转拼音首字母
-
-let code =
-
-str.charCodeAt(0);
-
-if(code>=19968 && code<=40869){
-
-let map = [
-
-["A",65,66],
-
-["B",66,67],
-
-["C",67,68],
-
-["D",68,69],
-
-["E",69,70],
-
-["F",70,71],
-
-["G",71,72],
-
-["H",72,73],
-
-["J",74,75],
-
-["K",75,76],
-
-["L",76,77],
-
-["M",77,78],
-
-["N",78,79],
-
-["O",79,80],
-
-["P",80,81],
-
-["Q",81,82],
-
-["R",82,83],
-
-["S",83,84],
-
-["T",84,85],
-
-["W",87,88],
-
-["X",88,89],
-
-["Y",89,90],
-
-["Z",90,91]
-
-];
-
-let initial =
-
-Math.floor(
-
-(code-19968)/100
-
-);
-
-return String.fromCharCode(
-
-65+initial%26
-
-);
 
 }
 
-return "#";
 
+
+return map[first] || "#";
+
+
+}
 }
 
 // ===============================
@@ -190,6 +125,9 @@ url:url,
 tags:tags,
 
 description:description,
+
+letter:
+getLetter(title)
 
 letter:letter
 
