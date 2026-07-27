@@ -379,3 +379,27 @@ margin:auto;
 }
 
 }
+
+.black button{
+background:#555;
+}
+
+
+.white button{
+background:#ff6fa7;
+}
+
+
+.pink button{
+background:#ff6fa7;
+}
+
+
+.green button{
+background:#59b86c;
+}
+
+
+.yellow button{
+background:#e8b400;
+}
