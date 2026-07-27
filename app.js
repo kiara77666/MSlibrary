@@ -3,26 +3,32 @@
 // ===============================
 
 
-// 读取保存主题
+// 读取主题
 
 (function(){
 
-const theme =
-localStorage.getItem("theme");
+const theme = localStorage.getItem("theme");
 
 
 if(theme){
 
-document.body.classList.add(theme);
+document.body.className = theme;
 
 }
-
 
 })();
 
 
 
-// 页面加载作品
+
+
+let currentCP = "";
+let currentLetter = "";
+
+
+
+
+// 页面加载
 
 loadWorks();
 
@@ -38,40 +44,30 @@ loadWorks();
 async function loadWorks(){
 
 
+let query =
+client
+.from("works")
+.select("*")
+.order("id",{ascending:false});
+
+
+
+if(currentCP){
+
+query =
+query.eq("cp",currentCP);
+
+}
+
+
+
 const {
 
 data,
 
 error
 
-}=await client
-
-
-.from("works")
-
-
-.select("*")
-
-
-.order(
-"id",
-{
-ascending:false
-}
-);
-
-
-
-if(error){
-
-alert(
-"读取失败："+error.message
-);
-
-
-return;
-
-}
+}=await query;
 
 
 
@@ -88,7 +84,40 @@ return;
 
 
 
+
+if(error){
+
+
+box.innerHTML =
+"读取失败";
+
+
+return;
+
+
+}
+
+
+
+
 box.innerHTML="";
+
+
+
+
+if(!data || data.length===0){
+
+
+box.innerHTML=
+"暂无作品";
+
+
+return;
+
+
+}
+
+
 
 
 
@@ -108,13 +137,13 @@ ${item.title}
 
 <p>
 CP：
-${item.cp}
+${item.cp || ""}
 </p>
 
 
 <p>
 类型：
-${item.type}
+${item.type || ""}
 </p>
 
 
@@ -129,13 +158,11 @@ ${item.description || ""}
 </p>
 
 
-
 <a href="${item.url}" target="_blank">
 
 进入作品
 
 </a>
-
 
 
 </div>
@@ -148,3 +175,76 @@ ${item.description || ""}
 
 
 }
+
+
+
+
+
+
+
+// ===============================
+// CP分类
+// ===============================
+
+
+document.querySelectorAll("#cpList button")
+.forEach(btn=>{
+
+
+btn.onclick=function(){
+
+
+currentCP=this.innerText;
+
+
+if(currentCP==="全部"){
+
+currentCP="";
+
+}
+
+
+loadWorks();
+
+
+}
+
+
+});
+
+
+
+
+
+
+
+
+// ===============================
+// 首字母分类
+// ===============================
+
+
+document.querySelectorAll("#letterList button")
+.forEach(btn=>{
+
+
+btn.onclick=function(){
+
+
+currentLetter=this.innerText;
+
+
+if(currentLetter==="全部"){
+
+currentLetter="";
+
+}
+
+
+loadWorks();
+
+
+}
+
+
+});
