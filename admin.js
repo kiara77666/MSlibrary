@@ -1,11 +1,17 @@
+
+
+
+
 // ===============================
 // MS Library 管理后台
 // ===============================
 
 
+
 // ===============================
 // 读取主题
 // ===============================
+
 
 const savedTheme =
 localStorage.getItem("theme");
@@ -19,14 +25,20 @@ savedTheme;
 }
 
 
+
+
+
+// 页面加载
+
 loadAdminWorks();
 
 
 
 
 
+
 // ===============================
-// 获取标题首字母
+// 获取首字母
 // ===============================
 
 
@@ -47,12 +59,13 @@ title.charAt(0);
 
 
 
-// 英文标题
+// 英文
 
 if(/[a-zA-Z]/.test(first)){
 
 
-return first.toUpperCase();
+return first
+.toUpperCase();
 
 
 }
@@ -60,10 +73,10 @@ return first.toUpperCase();
 
 
 
+// 中文常用映射
 
-// 常用中文映射
 
-let map = {
+let map={
 
 
 "敏":"M",
@@ -77,21 +90,23 @@ let map = {
 
 "程":"C",
 
+
 "张":"Z",
 
 "赵":"Z",
+
 
 "李":"L",
 
 "林":"L",
 
+
 "王":"W",
 
 "吴":"W",
 
-"周":"Z",
 
-"郑":"Z"
+"周":"Z"
 
 
 
@@ -99,27 +114,12 @@ let map = {
 
 
 
+return map[first] || "#";
 
-
-if(map[first]){
-
-
-return map[first];
 
 
 }
 
-
-
-
-
-
-// 其他中文返回#
-
-return "#";
-
-
-}
 
 
 
@@ -172,7 +172,9 @@ document.getElementById("description").value.trim();
 if(!title){
 
 
-alert("请输入作品名称");
+alert(
+"请输入作品名称"
+);
 
 
 return;
@@ -183,9 +185,6 @@ return;
 
 
 
-
-
-// 自动生成首字母
 
 const letter =
 getLetter(title);
@@ -236,6 +235,7 @@ letter:letter
 
 
 
+
 if(error){
 
 
@@ -253,10 +253,10 @@ return;
 
 
 
-alert(
-"保存成功，首字母："+letter
-);
 
+alert(
+"保存成功"
+);
 
 
 
@@ -267,12 +267,9 @@ alert(
 
 document.getElementById("title").value="";
 
-
 document.getElementById("url").value="";
 
-
 document.getElementById("tags").value="";
-
 
 document.getElementById("description").value="";
 
@@ -295,7 +292,7 @@ loadAdminWorks();
 
 
 // ===============================
-// 加载作品
+// 加载作品列表
 // ===============================
 
 
@@ -329,16 +326,20 @@ ascending:false
 
 
 
+
 if(error){
 
 
-alert(error.message);
+alert(
+error.message
+);
 
 
 return;
 
 
 }
+
 
 
 
@@ -365,12 +366,13 @@ box.innerHTML="";
 
 
 
+
+
 data.forEach(item=>{
 
 
 
 box.innerHTML += `
-
 
 
 <div class="card">
@@ -394,7 +396,6 @@ ${item.cp || ""}
 
 
 
-
 <p>
 
 首字母：
@@ -408,7 +409,7 @@ ${item.letter || ""}
 
 <p>
 
-类型：
+作品分类：
 
 ${item.type || ""}
 
@@ -416,10 +417,9 @@ ${item.type || ""}
 
 
 
-
 <p>
 
-标签：
+Tag：
 
 ${item.tags || ""}
 
@@ -427,8 +427,9 @@ ${item.tags || ""}
 
 
 
-
 <p>
+
+简介：
 
 ${item.description || ""}
 
@@ -437,7 +438,8 @@ ${item.description || ""}
 
 
 
-<a href="${item.url || '#'}" target="_blank">
+<a href="${item.url || '#'}"
+target="_blank">
 
 打开作品
 
@@ -445,16 +447,27 @@ ${item.description || ""}
 
 
 
-
 <br><br>
 
 
 
-<button onclick="deleteWork(${item.id})">
+<button
+onclick="editWork(${item.id})">
+
+编辑
+
+</button>
+
+
+
+
+<button
+onclick="deleteWork(${item.id})">
 
 删除
 
 </button>
+
 
 
 
@@ -481,6 +494,172 @@ ${item.description || ""}
 
 
 // ===============================
+// 编辑作品
+// ===============================
+
+
+async function editWork(id){
+
+
+
+const title =
+prompt(
+"修改作品名称："
+);
+
+
+
+const cp =
+prompt(
+"修改CP："
+);
+
+
+
+const type =
+prompt(
+"修改作品分类：\n同人文 / 视频 / 图文 / 剪辑"
+);
+
+
+
+const tags =
+prompt(
+"修改Tag：\n例如：港风,现背,HE"
+);
+
+
+
+const letter =
+prompt(
+"修改首字母：\n例如：M"
+);
+
+
+
+
+
+
+let updateData={};
+
+
+
+
+
+if(title){
+
+updateData.title =
+title.trim();
+
+}
+
+
+
+if(cp){
+
+updateData.cp =
+cp.trim();
+
+}
+
+
+
+if(type){
+
+updateData.type =
+type.trim();
+
+}
+
+
+
+if(tags){
+
+updateData.tags =
+tags.trim();
+
+}
+
+
+
+if(letter){
+
+updateData.letter =
+letter
+.trim()
+.charAt(0)
+.toUpperCase();
+
+}
+
+
+
+
+
+
+
+const {
+
+error
+
+}=await client
+
+
+.from("works")
+
+
+.update(updateData)
+
+
+.eq(
+"id",
+id
+);
+
+
+
+
+
+
+
+if(error){
+
+
+alert(
+"修改失败："+error.message
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+alert(
+"修改成功"
+);
+
+
+
+loadAdminWorks();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
 // 删除作品
 // ===============================
 
@@ -489,13 +668,16 @@ async function deleteWork(id){
 
 
 
-if(!confirm("确定删除这个作品吗？")){
+if(!confirm(
+"确定删除这个作品吗？"
+)){
 
 
 return;
 
 
 }
+
 
 
 
@@ -523,10 +705,13 @@ id
 
 
 
+
 if(error){
 
 
-alert(error.message);
+alert(
+error.message
+);
 
 
 return;
@@ -538,7 +723,10 @@ return;
 
 
 
-alert("删除成功");
+
+alert(
+"删除成功"
+);
 
 
 
