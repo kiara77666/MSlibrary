@@ -1,209 +1,183 @@
-let works = [];
-let current = [];
+// ===============================
+// MS Library 首页
+// ===============================
 
-// 读取数据库
-async function loadWorks() {
 
-    const { data, error } = await client
-        .from("works")
-        .select("*")
-        .order("id", { ascending: false });
+// 页面加载作品
 
-    if (error) {
-        console.log(error);
-        alert("读取数据库失败");
-        return;
-    }
+loadWorks();
 
-    works = data;
-    current = data;
 
-    createCP();
-    createLetter();
-    render(data);
+
+
+// ===============================
+// 加载作品
+// ===============================
+
+
+async function loadWorks(){
+
+
+const {
+
+data,
+
+error
+
+}=await client
+
+
+.from("works")
+
+
+.select("*")
+
+
+.order(
+"id",
+{
+ascending:false
+}
+);
+
+
+
+
+
+if(error){
+
+
+alert(
+"读取失败："+error.message
+);
+
+
+return;
+
+
 }
 
-// 渲染作品
-function render(list) {
 
-    const grid = document.getElementById("grid");
 
-    grid.innerHTML = "";
 
-    list.forEach(item => {
 
-        grid.innerHTML += `
+const box =
 
-<div class="card" onclick="openWork('${item.url}')">
+document.getElementById("workList");
 
-<img src="${item.cover}" onerror="this.src='images/default.jpg'">
 
-<div class="info">
 
-<h3>${item.title}</h3>
 
-<p>${item.cp}</p>
+if(!box){
 
-<p>${item.type}</p>
+return;
 
-<span class="tag">${item.tags || ""}</span>
+}
+
+
+
+
+box.innerHTML="";
+
+
+
+
+
+data.forEach(item=>{
+
+
+
+box.innerHTML += `
+
+
+
+<div class="card">
+
+
+
+<h3>
+
+${item.title}
+
+</h3>
+
+
+
+
+
+<p>
+
+CP：
+
+${item.cp}
+
+</p>
+
+
+
+
+
+<p>
+
+类型：
+
+${item.type}
+
+</p>
+
+
+
+
+
+<p>
+
+标签：
+
+${item.tags || ""}
+
+</p>
+
+
+
+
+
+<p>
+
+${item.description || ""}
+
+</p>
+
+
+
+
+
+
+<a 
+
+href="${item.url}"
+
+target="_blank">
+
+
+进入作品
+
+
+</a>
+
+
+
+
 
 </div>
 
-</div>
+
 
 `;
 
-    });
 
-}
 
-// 打开链接
-function openWork(url){
+});
 
-    window.open(url,"_blank");
 
-}
-
-// 搜索
-document.getElementById("search").oninput=function(){
-
-    let key=this.value.trim();
-
-    if(key===""){
-
-        render(works);
-
-        return;
-
-    }
-
-    let result=works.filter(item=>
-
-        item.title.includes(key) ||
-
-        item.cp.includes(key) ||
-
-        (item.tags||"").includes(key)
-
-    );
-
-    render(result);
-
-};
-
-// 自动生成CP分类
-function createCP(){
-
-    const cpList=document.getElementById("cpList");
-
-    cpList.innerHTML="";
-
-    let cps=[...new Set(works.map(i=>i.cp))];
-
-    let all=document.createElement("button");
-
-    all.innerText="全部";
-
-    all.onclick=function(){
-
-        render(works);
-
-    }
-
-    cpList.appendChild(all);
-
-    cps.forEach(cp=>{
-
-        let count=works.filter(i=>i.cp===cp).length;
-
-        let btn=document.createElement("button");
-
-        btn.innerText=`${cp} (${count})`;
-
-        btn.onclick=function(){
-
-            render(
-
-                works.filter(i=>i.cp===cp)
-
-            );
-
-        }
-
-        cpList.appendChild(btn);
-
-    });
-
-}
-
-// 自动生成首字母
-function createLetter(){
-
-    const box=document.getElementById("letterList");
-
-    box.innerHTML="";
-
-    let letters=[...new Set(
-
-        works.map(i=>
-
-            i.title.substring(0,1).toUpperCase()
-
-        )
-
-    )].sort();
-
-    let all=document.createElement("button");
-
-    all.innerText="全部";
-
-    all.onclick=function(){
-
-        render(works);
-
-    }
-
-    box.appendChild(all);
-
-    letters.forEach(letter=>{
-
-        let btn=document.createElement("button");
-
-        btn.innerText=letter;
-
-        btn.onclick=function(){
-
-            render(
-
-                works.filter(i=>
-
-                    i.title.substring(0,1).toUpperCase()==letter
-
-                )
-
-            );
-
-        }
-
-        box.appendChild(btn);
-
-    });
-
-}
-
-// 页面启动
-loadWorks();
-
-let name =
-localStorage.getItem("siteName");
-
-
-if(name){
-
-document.getElementById(
-"siteTitle"
-).innerHTML=
-"📚 "+name;
 
 }
