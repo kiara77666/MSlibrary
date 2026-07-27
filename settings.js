@@ -3,9 +3,11 @@
 // ===============================
 
 
-// 页面加载读取主题
+
+// 页面打开读取主题
 
 loadTheme();
+
 
 
 
@@ -18,13 +20,23 @@ loadTheme();
 function changeTheme(theme){
 
 
-    document.body.className = theme;
+
+document.body.className = theme;
 
 
-    localStorage.setItem(
-        "theme",
-        theme
-    );
+
+localStorage.setItem(
+
+"theme",
+
+theme
+
+);
+
+
+
+alert("主题已切换");
+
 
 
 }
@@ -33,23 +45,28 @@ function changeTheme(theme){
 
 
 
+
 // ===============================
-// 读取保存主题
+// 读取主题
 // ===============================
 
 
 function loadTheme(){
 
 
-    const theme =
-    localStorage.getItem("theme");
+const theme =
+
+localStorage.getItem("theme");
 
 
 
-    if(theme){
+if(theme){
 
-        document.body.className = theme;
 
-    }
+document.body.className = theme;
+
+
+}
+
 
 }
