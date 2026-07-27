@@ -6,6 +6,17 @@
 
 // 页面打开加载
 
+const savedTheme =
+localStorage.getItem("theme");
+
+
+if(savedTheme){
+
+document.body.className =
+savedTheme;
+
+}
+
 loadAdminWorks();
 
 
