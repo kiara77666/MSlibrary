@@ -33,18 +33,17 @@ loadAdminWorks();
 function getLetter(title){
 
 
-let map = {
+if(!title){
 
-"敏":"M",
-"眉":"M",
-"朝":"C"
+return "#";
 
-};
+}
 
 
 
 let first =
 title.charAt(0);
+
 
 
 
@@ -60,9 +59,64 @@ return first.toUpperCase();
 
 
 
-// 中文标题
 
-return map[first] || "#";
+
+// 常用中文映射
+
+let map = {
+
+
+"敏":"M",
+
+"眉":"M",
+
+"朝":"C",
+
+
+"陈":"C",
+
+"程":"C",
+
+"张":"Z",
+
+"赵":"Z",
+
+"李":"L",
+
+"林":"L",
+
+"王":"W",
+
+"吴":"W",
+
+"周":"Z",
+
+"郑":"Z"
+
+
+
+};
+
+
+
+
+
+if(map[first]){
+
+
+return map[first];
+
+
+}
+
+
+
+
+
+
+// 其他中文返回#
+
+return "#";
 
 
 }
@@ -84,32 +138,32 @@ async function saveWork(){
 
 
 const title =
-document.getElementById("title").value;
+document.getElementById("title").value.trim();
 
 
 
 const cp =
-document.getElementById("cp").value;
+document.getElementById("cp").value.trim();
 
 
 
 const type =
-document.getElementById("type").value;
+document.getElementById("type").value.trim();
 
 
 
 const url =
-document.getElementById("url").value;
+document.getElementById("url").value.trim();
 
 
 
 const tags =
-document.getElementById("tags").value;
+document.getElementById("tags").value.trim();
 
 
 
 const description =
-document.getElementById("description").value;
+document.getElementById("description").value.trim();
 
 
 
@@ -129,8 +183,13 @@ return;
 
 
 
+
+
+// 自动生成首字母
+
 const letter =
 getLetter(title);
+
 
 
 
@@ -194,11 +253,16 @@ return;
 
 
 
-alert("保存成功");
+alert(
+"保存成功，首字母："+letter
+);
 
 
 
 
+
+
+// 清空
 
 
 document.getElementById("title").value="";
@@ -221,6 +285,7 @@ loadAdminWorks();
 
 
 }
+
 
 
 
@@ -284,6 +349,16 @@ document.getElementById("workList");
 
 
 
+if(!box){
+
+return;
+
+}
+
+
+
+
+
 box.innerHTML="";
 
 
@@ -303,7 +378,7 @@ box.innerHTML += `
 
 <h3>
 
-${item.title}
+${item.title || ""}
 
 </h3>
 
@@ -396,6 +471,7 @@ ${item.description || ""}
 
 
 }
+
 
 
 
