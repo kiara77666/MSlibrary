@@ -85,19 +85,24 @@ margin:15px 0;
 }
 
 
-
 #cpList,
 #letterList,
 #workTypeList,
 #tagList{
 
-    display:flex;
 
-    gap:10px;
+display:flex;
 
-    overflow-x:auto;
 
-    padding-bottom:10px;
+gap:15px;
+
+
+overflow-x:auto;
+
+
+padding:10px 0;
+
+
 
 }
 
