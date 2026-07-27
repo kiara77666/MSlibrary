@@ -21,7 +21,20 @@ function changeTheme(theme){
 
 
 
-document.body.className = theme;
+function changeTheme(theme){
+
+document.body.className="";
+
+document.body.classList.add(theme);
+
+
+localStorage.setItem(
+"theme",
+theme
+);
+
+
+}
 
 
 
