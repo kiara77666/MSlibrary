@@ -3,7 +3,48 @@
 // ===============================
 
 
-// 获取拼音首字母
+// ===============================
+// 读取主题
+// ===============================
+
+
+(function(){
+
+const theme =
+localStorage.getItem("theme");
+
+
+if(theme){
+
+document.body.className = theme;
+
+}
+
+
+})();
+
+
+
+
+
+// ===============================
+// 当前筛选
+// ===============================
+
+
+let currentCP = "";
+
+let currentLetter = "";
+
+
+
+
+
+
+// ===============================
+// 获取首字母
+// ===============================
+
 
 function getFirstLetter(str){
 
@@ -23,77 +64,87 @@ str.charAt(0).toUpperCase();
 
 if(/[A-Z]/.test(first)){
 
+
 return first;
+
 
 }
 
 
-// 中文简单映射
+
+// 中文范围粗略判断
 
 let code =
 str.charCodeAt(0);
+
 
 
 if(code>=19968 && code<=40869){
 
 
 if(code < 20320) return "A";
+
 if(code < 20700) return "B";
+
 if(code < 21000) return "C";
+
 if(code < 21300) return "D";
+
 if(code < 21600) return "E";
+
 if(code < 22000) return "F";
+
 if(code < 22500) return "G";
+
 if(code < 23000) return "H";
+
 if(code < 23500) return "J";
+
 if(code < 24000) return "K";
-if(code < 24500) return "L";
-if(code < 25000) return "M";
-if(code < 30000) return "N";
-if(code < 33000) return "P";
-if(code < 35000) return "Q";
-if(code < 37000) return "S";
-if(code < 39000) return "T";
-if(code < 40000) return "W";
+
+if(code < 25000) return "L";
+
+if(code < 30000) return "M";
+
+if(code < 33000) return "N";
+
+if(code < 35000) return "P";
+
+if(code < 37000) return "Q";
+
+if(code < 39000) return "S";
+
+if(code < 40000) return "T";
+
 if(code < 40500) return "X";
+
 
 return "Y";
 
+
 }
+
 
 
 return "";
 
 }
 
-// 读取主题
-
-(function(){
-
-const theme = localStorage.getItem("theme");
-
-
-if(theme){
-
-document.body.className = theme;
-
-}
-
-})();
 
 
 
 
 
-let currentCP = "";
-let currentLetter = "";
 
 
-
-
+// ===============================
 // 页面加载
+// ===============================
+
 
 loadWorks();
+
+
 
 
 
@@ -107,23 +158,6 @@ loadWorks();
 async function loadWorks(){
 
 
-let query =
-client
-.from("works")
-.select("*")
-.order("id",{ascending:false});
-
-
-
-if(currentCP){
-
-query =
-query.eq("cp",currentCP);
-
-}
-
-  
-
 
 const {
 
@@ -131,7 +165,23 @@ data,
 
 error
 
-}=await query;
+}=await client
+
+
+.from("works")
+
+
+.select("*")
+
+
+.order(
+"id",
+{
+ascending:false
+}
+);
+
+
 
 
 
@@ -145,6 +195,7 @@ if(!box){
 return;
 
 }
+
 
 
 
@@ -169,17 +220,8 @@ box.innerHTML="";
 
 
 
-if(!data || data.length===0){
 
-
-box.innerHTML=
-"暂无作品";
-
-
-return;
-
-
-}
+let count = 0;
 
 
 
@@ -187,6 +229,25 @@ return;
 
 data.forEach(item=>{
 
+
+
+// CP筛选
+
+if(
+currentCP &&
+item.cp !== currentCP
+){
+
+return;
+
+}
+
+
+
+
+
+
+// 首字母筛选
 
 let letter =
 getFirstLetter(item.title);
@@ -203,6 +264,11 @@ return;
 }
 
 
+
+
+
+
+
 box.innerHTML += `
 
 
@@ -210,38 +276,58 @@ box.innerHTML += `
 
 
 <h3>
+
 ${item.title}
+
 </h3>
 
 
+
 <p>
+
 CP：
+
 ${item.cp || ""}
+
 </p>
 
 
+
 <p>
+
 类型：
+
 ${item.type || ""}
+
 </p>
 
 
+
 <p>
+
 标签：
+
 ${item.tags || ""}
+
 </p>
+
 
 
 <p>
+
 ${item.description || ""}
+
 </p>
 
 
-<a href="${item.url}" target="_blank">
+
+<a href="${item.url || '#'}"
+target="_blank">
 
 进入作品
 
 </a>
+
 
 
 </div>
@@ -250,7 +336,26 @@ ${item.description || ""}
 `;
 
 
+
+count++;
+
+
 });
+
+
+
+
+
+
+if(count===0){
+
+
+box.innerHTML =
+"暂无符合条件的作品";
+
+
+}
+
 
 
 }
@@ -261,8 +366,56 @@ ${item.description || ""}
 
 
 
+
 // ===============================
-// CP分类
+// CP分类按钮
+// ===============================
+
+
+document
+.querySelectorAll("#cpList button")
+.forEach(btn=>{
+
+
+btn.onclick=function(){
+
+
+
+currentCP =
+this.innerText;
+
+
+
+if(
+currentCP==="全部"
+){
+
+currentCP="";
+
+}
+
+
+
+loadWorks();
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ===============================
+// 首字母分类按钮
 // ===============================
 
 
@@ -274,44 +427,32 @@ document
 btn.onclick=function(){
 
 
-currentLetter=this.innerText;
+
+currentLetter =
+this.innerText;
 
 
-if(currentLetter==="全部"){
+
+if(
+currentLetter==="全部"
+){
 
 currentLetter="";
 
 }
 
 
-loadWorks();
-
-
-}
-
-
-});
-
-btn.onclick=function(){
-
-
-currentCP=this.innerText;
-
-
-if(currentCP==="全部"){
-
-currentCP="";
-
-}
-
 
 loadWorks();
 
 
+
 }
 
 
+
 });
+
 
 
 
@@ -321,31 +462,55 @@ loadWorks();
 
 
 // ===============================
-// 首字母分类
+// 搜索功能
 // ===============================
 
 
-document.querySelectorAll("#letterList button")
-.forEach(btn=>{
+const search =
+document.getElementById("search");
 
 
-btn.onclick=function(){
+
+if(search){
 
 
-currentLetter=this.innerText;
+search.oninput=function(){
 
 
-if(currentLetter==="全部"){
-
-currentLetter="";
-
-}
+let keyword =
+this.value.toLowerCase();
 
 
-loadWorks();
+
+document
+.querySelectorAll(".card")
+.forEach(card=>{
+
+
+if(
+card.innerText
+.toLowerCase()
+.includes(keyword)
+
+){
+
+
+card.style.display="block";
+
+
+}else{
+
+
+card.style.display="none";
 
 
 }
 
 
 });
+
+
+};
+
+
+}
