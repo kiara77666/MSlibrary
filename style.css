@@ -78,7 +78,7 @@ font-size:16px;
 
 
 /* =====================
-分类区域
+分类
 ===================== */
 
 
@@ -94,14 +94,13 @@ nav h3{
 
 margin:15px 0;
 
-font-size:22px;
-
 }
 
 
 
 
-/* 四个分类横向滚动 */
+
+/* 四个分类横向排列 */
 
 
 #cpList,
@@ -112,7 +111,7 @@ font-size:22px;
 
 display:flex;
 
-gap:15px;
+gap:12px;
 
 overflow-x:auto;
 
@@ -123,7 +122,7 @@ padding:10px 0;
 
 
 
-/* 圆形胶囊按钮 */
+/* 四个分类统一圆形按钮 */
 
 
 #cpList button,
@@ -132,21 +131,31 @@ padding:10px 0;
 #tagList button{
 
 
-border:none;
-
-background:white;
+border:none !important;
 
 
-border-radius:50px;
+background:white !important;
 
 
-padding:12px 25px;
+color:#333 !important;
+
+
+border-radius:999px !important;
+
+
+height:42px;
+
+
+padding:0 22px;
+
+
+font-size:15px;
 
 
 white-space:nowrap;
 
 
-font-size:16px;
+cursor:pointer;
 
 
 box-shadow:
@@ -154,7 +163,22 @@ box-shadow:
 0 3px 10px rgba(0,0,0,.08);
 
 
-cursor:pointer;
+}
+
+
+
+
+
+#cpList button:hover,
+#letterList button:hover,
+#workTypeList button:hover,
+#tagList button:hover{
+
+
+background:#ffb3d0 !important;
+
+
+color:white !important;
 
 
 }
@@ -162,8 +186,9 @@ cursor:pointer;
 
 
 
+
 /* =====================
-作品
+作品区域
 ===================== */
 
 
@@ -285,12 +310,14 @@ font-size:15px;
 
 
 
+
 /* =====================
 主题
 ===================== */
 
 
 /* 黑色 */
+
 
 .black{
 
@@ -301,12 +328,14 @@ color:white;
 }
 
 
+
 .black header,
 .black footer{
 
-background:#1c1c1c;
+background:#222;
 
 }
+
 
 
 .black .card{
@@ -318,7 +347,9 @@ color:white;
 }
 
 
+
 /* 白色 */
+
 
 .white{
 
@@ -329,7 +360,9 @@ color:#333;
 }
 
 
+
 /* 粉色 */
+
 
 .pink{
 
@@ -355,11 +388,29 @@ background:white;
 
 
 
+
 /* 绿色 */
+
 
 .green{
 
 background:#effff3;
+
+}
+
+
+
+.green header{
+
+background:#f7fff8;
+
+}
+
+
+
+.green footer{
+
+background:#f7fff8;
 
 }
 
@@ -373,11 +424,22 @@ background:white;
 
 
 
+
+
 /* 黄色 */
+
 
 .yellow{
 
 background:#fffbea;
+
+}
+
+
+
+.yellow header{
+
+background:#fffdf3;
 
 }
 
@@ -436,139 +498,35 @@ color:white;
 ===================== */
 
 
-.black button{
+.black button:not(#cpList button):not(#letterList button):not(#workTypeList button):not(#tagList button){
 
 background:#555;
 
-color:white;
-
 }
 
 
-
-.white button{
-
-background:#ff6fa7;
-
-color:white;
-
-}
-
-
-
-.pink button{
-
-background:#ff6fa7;
-
-color:white;
-
-}
-
-
-
-.green button{
+.green button:not(#cpList button):not(#letterList button):not(#workTypeList button):not(#tagList button){
 
 background:#59b86c;
 
-color:white;
-
 }
 
 
-
-.yellow button{
+.yellow button:not(#cpList button):not(#letterList button):not(#workTypeList button):not(#tagList button){
 
 background:#e8b400;
 
-color:white;
-
 }
 
 
 
+.pink button:not(#cpList button):not(#letterList button):not(#workTypeList button):not(#tagList button){
 
-
-/* 首页主题 */
-
-
-body.green{
-
-background:#effff3;
+background:#ff6fa7;
 
 }
 
 
-
-body.green header{
-
-background:#f7fff8;
-
-}
-
-
-
-body.green footer{
-
-background:#f7fff8;
-
-}
-
-
-
-
-
-body.yellow{
-
-background:#fffbea;
-
-}
-
-
-
-body.yellow header{
-
-background:#fffdf3;
-
-}
-
-
-
-
-
-body.black{
-
-background:#111;
-
-color:white;
-
-}
-
-
-
-body.black header,
-body.black footer{
-
-background:#222;
-
-}
-
-
-
-
-
-body.white{
-
-background:white;
-
-}
-
-
-
-body.pink{
-
-background:#fff0f6;
-
-}
 
 
 
@@ -582,74 +540,5 @@ max-width:1200px;
 margin:auto;
 
 }
-
-}
-/* =====================
-分类按钮最终样式
-===================== */
-
-
-#cpList button,
-#letterList button,
-#workTypeList button,
-#tagList button{
-
-
-background:white !important;
-
-
-color:#333 !important;
-
-
-border:none !important;
-
-
-border-radius:999px !important;
-
-
-height:45px;
-
-
-padding:0 28px;
-
-
-font-size:16px;
-
-
-white-space:nowrap;
-
-
-display:flex;
-
-
-align-items:center;
-
-
-justify-content:center;
-
-
-box-shadow:
-0 3px 12px rgba(0,0,0,.08);
-
-
-}
-
-#cpList,
-#letterList,
-#workTypeList,
-#tagList{
-
-
-display:flex;
-
-
-gap:15px;
-
-
-overflow-x:auto;
-
-
-padding:10px 0;
-
 
 }
