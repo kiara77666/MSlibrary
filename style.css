@@ -403,3 +403,79 @@ background:#59b86c;
 .yellow button{
 background:#e8b400;
 }
+
+/* 首页主题 */
+
+
+body.green{
+
+background:#effff3;
+
+}
+
+
+
+body.green header{
+
+background:#f7fff8;
+
+}
+
+
+
+body.green footer{
+
+background:#f7fff8;
+
+}
+
+
+
+body.yellow{
+
+background:#fffbea;
+
+}
+
+
+
+body.yellow header{
+
+background:#fffdf3;
+
+}
+
+
+
+body.black{
+
+background:#111;
+
+color:white;
+
+}
+
+
+
+body.black header,
+body.black footer{
+
+background:#222;
+
+}
+
+
+
+body.white{
+
+background:white;
+
+}
+
+
+
+body.pink{
+
+background:#fff0f6;
+
+}
