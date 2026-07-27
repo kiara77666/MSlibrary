@@ -145,9 +145,29 @@ return;
 
 }
 
+  // 作品分类筛选
+
+if(
+currentType &&
+item.type !== currentType
+){
+
+return;
+
+}
 
 
+// Tag筛选
 
+if(
+currentTag &&
+!(item.tags || "").includes(currentTag)
+
+){
+
+return;
+
+}
 
 
 
@@ -432,3 +452,71 @@ card.style.display="none";
 
 
 }
+
+
+// ===============================
+// 作品分类
+// ===============================
+
+
+document
+.querySelectorAll("#workTypeList button")
+.forEach(btn=>{
+
+
+btn.onclick=function(){
+
+
+currentType=this.innerText;
+
+
+
+if(currentType==="全部"){
+
+currentType="";
+
+}
+
+
+loadWorks();
+
+
+}
+
+});
+
+
+
+
+
+
+// ===============================
+// Tag分类
+// ===============================
+
+
+document
+.querySelectorAll("#tagList button")
+.forEach(btn=>{
+
+
+btn.onclick=function(){
+
+
+currentTag=this.innerText;
+
+
+
+if(currentTag==="全部"){
+
+currentTag="";
+
+}
+
+
+loadWorks();
+
+
+}
+
+});
