@@ -3,22 +3,29 @@
 // ===============================
 
 
-// 页面加载作品
+// 读取保存主题
 
-// 读取主题
+(function(){
 
-const savedTheme =
+const theme =
 localStorage.getItem("theme");
 
 
-if(savedTheme){
+if(theme){
 
-document.body.className =
-savedTheme;
+document.body.classList.add(theme);
 
 }
 
+
+})();
+
+
+
+// 页面加载作品
+
 loadWorks();
+
 
 
 
@@ -55,10 +62,7 @@ ascending:false
 
 
 
-
-
 if(error){
-
 
 alert(
 "读取失败："+error.message
@@ -67,17 +71,12 @@ alert(
 
 return;
 
-
 }
 
 
 
-
-
 const box =
-
-document.getElementById("workList");
-
+document.getElementById("grid");
 
 
 
@@ -89,108 +88,63 @@ return;
 
 
 
-
 box.innerHTML="";
-
-
 
 
 
 data.forEach(item=>{
 
 
-
 box.innerHTML += `
-
 
 
 <div class="card">
 
 
-
 <h3>
-
 ${item.title}
-
 </h3>
 
 
-
-
-
 <p>
-
 CP：
-
 ${item.cp}
-
 </p>
 
 
-
-
-
 <p>
-
 类型：
-
 ${item.type}
-
 </p>
 
 
-
-
-
 <p>
-
 标签：
-
 ${item.tags || ""}
-
 </p>
-
-
-
 
 
 <p>
-
 ${item.description || ""}
-
 </p>
 
 
 
-
-
-
-<a 
-
-href="${item.url}"
-
-target="_blank">
-
+<a href="${item.url}" target="_blank">
 
 进入作品
 
-
 </a>
-
-
 
 
 
 </div>
 
 
-
 `;
 
 
-
 });
-
 
 
 }
