@@ -24,7 +24,6 @@ document.body.className = theme;
 
 
 
-
 // ===============================
 // 当前筛选
 // ===============================
@@ -39,12 +38,68 @@ let currentType = "";
 let currentTag = "";
 
 
+
+
+
+
+// ===============================
+// 中文首字母备用
+// ===============================
+
+
+function getLetter(title){
+
+
+if(!title){
+
+return "";
+
+}
+
+
+let first =
+title.charAt(0);
+
+
+
+if(/[a-zA-Z]/.test(first)){
+
+return first.toUpperCase();
+
+}
+
+
+
+let map={
+
+
+"敏":"M",
+"眉":"M",
+"朝":"C"
+
+
+};
+
+
+
+return map[first] || "#";
+
+
+}
+
+
+
+
+
+
+
 // ===============================
 // 页面加载
 // ===============================
 
 
 loadWorks();
+
 
 
 
@@ -87,6 +142,7 @@ ascending:false
 
 
 
+
 const box =
 document.getElementById("grid");
 
@@ -101,12 +157,10 @@ return;
 
 
 
-
 if(error){
 
 
-box.innerHTML =
-"读取失败";
+box.innerHTML="读取失败";
 
 
 return;
@@ -122,7 +176,9 @@ box.innerHTML="";
 
 
 
-let count = 0;
+let count=0;
+
+
 
 
 
@@ -132,9 +188,7 @@ data.forEach(item=>{
 
 
 
-
-
-// CP筛选
+// CP
 
 if(
 currentCP &&
@@ -145,7 +199,11 @@ return;
 
 }
 
-  // 作品分类筛选
+
+
+
+
+// 类型
 
 if(
 currentType &&
@@ -157,11 +215,16 @@ return;
 }
 
 
-// Tag筛选
+
+
+
+// TAG
 
 if(
 currentTag &&
-!(item.tags || "").includes(currentTag)
+!(item.tags || "")
+.split(",")
+.includes(currentTag)
 
 ){
 
@@ -171,17 +234,25 @@ return;
 
 
 
-// 首字母筛选
+
+
+
+
+// 首字母
+
+let letter =
+item.letter || getLetter(item.title);
+
+
 
 if(
 currentLetter &&
-item.letter !== currentLetter
+letter !== currentLetter
 ){
 
 return;
 
 }
-
 
 
 
@@ -195,76 +266,56 @@ box.innerHTML += `
 <div class="card">
 
 
+
 <h3>
-
-${item.title}
-
+${item.title || ""}
 </h3>
 
 
 
-
 <p>
-
 CP：
-
 ${item.cp || ""}
-
 </p>
 
 
 
 
 <p>
-
 类型：
-
 ${item.type || ""}
-
 </p>
 
 
 
 
 <p>
-
 首字母：
-
-${item.letter || ""}
-
+${letter}
 </p>
 
 
 
 
 <p>
-
-标签：
-
+Tag：
 ${item.tags || ""}
-
 </p>
 
 
 
 
 <p>
-
 ${item.description || ""}
-
 </p>
-
 
 
 
 
 <a href="${item.url || '#'}"
-
 target="_blank">
 
-
 进入作品
-
 
 </a>
 
@@ -292,7 +343,7 @@ count++;
 if(count===0){
 
 
-box.innerHTML =
+box.innerHTML=
 "暂无符合条件的作品";
 
 
@@ -309,8 +360,9 @@ box.innerHTML =
 
 
 
+
 // ===============================
-// CP分类
+// CP 分类
 // ===============================
 
 
@@ -322,8 +374,7 @@ document
 btn.onclick=function(){
 
 
-currentCP =
-this.innerText;
+currentCP=this.innerText;
 
 
 
@@ -351,7 +402,6 @@ loadWorks();
 
 
 
-
 // ===============================
 // 首字母分类
 // ===============================
@@ -365,8 +415,7 @@ document
 btn.onclick=function(){
 
 
-currentLetter =
-this.innerText;
+currentLetter=this.innerText;
 
 
 
@@ -394,68 +443,8 @@ loadWorks();
 
 
 
-
 // ===============================
-// 搜索
-// ===============================
-
-
-const search =
-document.getElementById("search");
-
-
-
-if(search){
-
-
-search.oninput=function(){
-
-
-
-let keyword =
-this.value.toLowerCase();
-
-
-
-
-document
-.querySelectorAll(".card")
-.forEach(card=>{
-
-
-if(
-card.innerText
-.toLowerCase()
-.includes(keyword)
-
-){
-
-
-card.style.display="block";
-
-
-}else{
-
-
-card.style.display="none";
-
-
-}
-
-
-});
-
-
-
-};
-
-
-
-}
-
-
-// ===============================
-// 作品分类
+// 类型分类
 // ===============================
 
 
@@ -478,10 +467,12 @@ currentType="";
 }
 
 
+
 loadWorks();
 
 
 }
+
 
 });
 
@@ -490,8 +481,11 @@ loadWorks();
 
 
 
+
+
+
 // ===============================
-// Tag分类
+// Tag 分类
 // ===============================
 
 
@@ -514,9 +508,80 @@ currentTag="";
 }
 
 
+
 loadWorks();
 
 
 }
 
+
 });
+
+
+
+
+
+
+
+
+
+// ===============================
+// 搜索
+// ===============================
+
+
+const search =
+document.getElementById("search");
+
+
+
+if(search){
+
+
+search.oninput=function(){
+
+
+
+let keyword =
+this.value
+.toLowerCase();
+
+
+
+
+
+document
+.querySelectorAll(".card")
+.forEach(card=>{
+
+
+
+if(
+card.innerText
+.toLowerCase()
+.includes(keyword)
+
+){
+
+
+card.style.display="block";
+
+
+}else{
+
+
+card.style.display="none";
+
+
+}
+
+
+
+});
+
+
+};
+
+
+
+}
