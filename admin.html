@@ -1,22 +1,27 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 
 <head>
 
 <meta charset="UTF-8">
 
+
 <meta name="viewport"
 content="width=device-width,initial-scale=1.0">
+
 
 <title>
 MS Library 后台
 </title>
 
 
+
 <link rel="stylesheet" href="style.css">
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script src="supabase.js"></script>
 
@@ -25,16 +30,22 @@ MS Library 后台
 
 
 
+
 <body>
+
 
 
 <header>
 
+
 <h1>
-📚 管理后台
+📚 MS Library 管理后台
 </h1>
 
+
 </header>
+
+
 
 
 
@@ -44,29 +55,60 @@ MS Library 后台
 <div class="card">
 
 
+
 <h2>
 添加作品
 </h2>
 
 
 
-<input id="title"
+
+<!-- 标题 -->
+
+<input
+
+id="title"
+
 placeholder="作品名称">
 
 
 
+
+
+<!-- CP -->
+
+
 <select id="cp">
 
-<option>敏沙</option>
 
-<option>眉嘉</option>
+<option>
+敏沙
+</option>
 
-<option>朝允</option>
 
-<option>其他角色拉郎</option>
+<option>
+眉嘉
+</option>
+
+
+<option>
+朝允
+</option>
+
+
+<option>
+其他角色拉郎
+</option>
+
 
 </select>
 
+
+
+
+
+
+<!-- 作品分类 -->
 
 
 <select id="type">
@@ -92,27 +134,76 @@ placeholder="作品名称">
 </option>
 
 
+<option>
+其他
+</option>
+
+
 </select>
 
 
 
 
-<input id="url"
-placeholder="跳转链接">
 
+
+
+<!-- 首字母 -->
 
 
 <input
-id="tags"
-placeholder="标签，例如：港风,现背,破镜重圆,HE">
 
+id="letter"
+
+placeholder="首字母，例如 M">
+
+
+
+
+
+
+<!-- 链接 -->
+
+
+<input
+
+id="url"
+
+placeholder="作品跳转链接">
+
+
+
+
+
+
+
+<!-- TAG -->
+
+
+<input
+
+id="tags"
+
+placeholder="
+Tag，例如：
+港风,现背,伪现背,破镜重圆,HE
+">
+
+
+
+
+
+
+
+<!-- 简介 -->
 
 
 <textarea
-id="description"
-placeholder="简介">
-</textarea>
 
+id="description"
+
+placeholder="作品简介">
+
+</textarea>
 
 
 
@@ -127,13 +218,20 @@ placeholder="简介">
 
 
 
+
+
+
 <hr>
+
+
+
 
 
 
 <h2>
 作品管理
 </h2>
+
 
 
 
@@ -145,24 +243,35 @@ placeholder="简介">
 
 
 
+
 </div>
+
 
 
 </main>
 
 
 
+
+
+
 <script>
+
 
 client.auth.getSession()
 
 .then(({data})=>{
 
+
 if(!data.session){
+
 
 location.href="login.html";
 
+
 }
+
+
 
 });
 
@@ -171,10 +280,14 @@ location.href="login.html";
 
 
 
+
+
 <script src="admin.js"></script>
 
 
 
 </body>
+
+
 
 </html>
