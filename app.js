@@ -59,6 +59,17 @@ query.eq("cp",currentCP);
 
 }
 
+  if(currentLetter){
+
+
+query =
+query.ilike(
+"title",
+currentLetter + "%"
+);
+
+
+  }
 
 
 const {
