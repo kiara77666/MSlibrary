@@ -23,6 +23,11 @@ padding-bottom:70px;
 
 
 
+/* =====================
+头部
+===================== */
+
+
 header{
 
 position:sticky;
@@ -70,6 +75,13 @@ font-size:16px;
 
 
 
+
+
+/* =====================
+分类区域
+===================== */
+
+
 nav{
 
 padding:15px;
@@ -82,7 +94,14 @@ nav h3{
 
 margin:15px 0;
 
+font-size:22px;
+
 }
+
+
+
+
+/* 四个分类横向滚动 */
 
 
 #cpList,
@@ -93,47 +112,59 @@ margin:15px 0;
 
 display:flex;
 
-
 gap:15px;
 
-
 overflow-x:auto;
-
 
 padding:10px 0;
 
 
-
 }
 
-display:flex;
 
-gap:10px;
 
-overflow-x:auto;
-
-}
-
+/* 圆形胶囊按钮 */
 
 
 #cpList button,
-#letterList button{
+#letterList button,
+#workTypeList button,
+#tagList button{
+
 
 border:none;
 
 background:white;
 
-border-radius:20px;
 
-padding:10px 18px;
+border-radius:50px;
+
+
+padding:12px 25px;
+
 
 white-space:nowrap;
 
+
+font-size:16px;
+
+
 box-shadow:
+
 0 3px 10px rgba(0,0,0,.08);
+
+
+cursor:pointer;
+
 
 }
 
+
+
+
+/* =====================
+作品
+===================== */
 
 
 main{
@@ -166,6 +197,7 @@ border-radius:20px;
 padding:15px;
 
 box-shadow:
+
 0 5px 18px rgba(0,0,0,.08);
 
 }
@@ -204,6 +236,13 @@ text-decoration:none;
 
 
 
+
+
+/* =====================
+底部导航
+===================== */
+
+
 footer{
 
 position:fixed;
@@ -225,6 +264,7 @@ justify-content:space-around;
 align-items:center;
 
 box-shadow:
+
 0 -2px 10px rgba(0,0,0,.08);
 
 }
@@ -240,6 +280,8 @@ color:#666;
 font-size:15px;
 
 }
+
+
 
 
 
@@ -351,7 +393,9 @@ background:white;
 
 
 
-/* 设置页面 */
+/* =====================
+设置页面
+===================== */
 
 
 .setting-box{
@@ -385,41 +429,64 @@ color:white;
 
 
 
-@media(min-width:900px){
 
-main{
 
-max-width:1200px;
+/* =====================
+主题按钮颜色
+===================== */
 
-margin:auto;
-
-}
-
-}
 
 .black button{
+
 background:#555;
+
+color:white;
+
 }
+
 
 
 .white button{
+
 background:#ff6fa7;
+
+color:white;
+
 }
+
 
 
 .pink button{
+
 background:#ff6fa7;
+
+color:white;
+
 }
+
 
 
 .green button{
+
 background:#59b86c;
+
+color:white;
+
 }
+
 
 
 .yellow button{
+
 background:#e8b400;
+
+color:white;
+
 }
+
+
+
+
 
 /* 首页主题 */
 
@@ -448,6 +515,8 @@ background:#f7fff8;
 
 
 
+
+
 body.yellow{
 
 background:#fffbea;
@@ -461,6 +530,8 @@ body.yellow header{
 background:#fffdf3;
 
 }
+
+
 
 
 
@@ -483,6 +554,8 @@ background:#222;
 
 
 
+
+
 body.white{
 
 background:white;
@@ -494,5 +567,20 @@ background:white;
 body.pink{
 
 background:#fff0f6;
+
+}
+
+
+
+
+@media(min-width:900px){
+
+main{
+
+max-width:1200px;
+
+margin:auto;
+
+}
 
 }
