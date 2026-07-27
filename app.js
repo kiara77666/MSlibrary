@@ -5,6 +5,19 @@
 
 // 页面加载作品
 
+// 读取主题
+
+const savedTheme =
+localStorage.getItem("theme");
+
+
+if(savedTheme){
+
+document.body.className =
+savedTheme;
+
+}
+
 loadWorks();
 
 
