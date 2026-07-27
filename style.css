@@ -584,3 +584,72 @@ margin:auto;
 }
 
 }
+/* =====================
+分类按钮最终样式
+===================== */
+
+
+#cpList button,
+#letterList button,
+#workTypeList button,
+#tagList button{
+
+
+background:white !important;
+
+
+color:#333 !important;
+
+
+border:none !important;
+
+
+border-radius:999px !important;
+
+
+height:45px;
+
+
+padding:0 28px;
+
+
+font-size:16px;
+
+
+white-space:nowrap;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+box-shadow:
+0 3px 12px rgba(0,0,0,.08);
+
+
+}
+
+#cpList,
+#letterList,
+#workTypeList,
+#tagList{
+
+
+display:flex;
+
+
+gap:15px;
+
+
+overflow-x:auto;
+
+
+padding:10px 0;
+
+
+}
