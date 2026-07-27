@@ -34,8 +34,9 @@ let currentCP = "";
 
 let currentLetter = "";
 
+let currentType = "";
 
-
+let currentTag = "";
 
 
 // ===============================
