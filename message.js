@@ -217,3 +217,40 @@ ${item.content}
 
 
 }
+function openNotice(){
+
+document.getElementById(
+"noticeBox"
+).style.display="flex";
+
+}
+
+
+
+function closeNotice(){
+
+document.getElementById(
+"noticeBox"
+).style.display="none";
+
+}
+
+
+
+function openMessage(){
+
+document.getElementById(
+"messageBox"
+).style.display="flex";
+
+}
+
+
+
+function closeMessage(){
+
+document.getElementById(
+"messageBox"
+).style.display="none";
+
+}
