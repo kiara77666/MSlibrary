@@ -916,3 +916,43 @@ loadAdminMessages();
 
 
 }
+
+// ===============================
+// 后台菜单切换
+// ===============================
+
+
+function showWorks(){
+
+
+document
+.getElementById("workPanel")
+.style.display="block";
+
+
+document
+.getElementById("messagePanel")
+.style.display="none";
+
+
+}
+
+
+
+function showMessages(){
+
+
+document
+.getElementById("workPanel")
+.style.display="none";
+
+
+document
+.getElementById("messagePanel")
+.style.display="block";
+
+
+loadAdminMessages();
+
+
+}
