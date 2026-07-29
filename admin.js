@@ -32,6 +32,8 @@ savedTheme;
 
 loadAdminWorks();
 
+loadAdminMessages();
+
 
 
 
